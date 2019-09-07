@@ -16,6 +16,7 @@ int main()
     delaunayInput.push_back(Delaunay::Point(0,0));
     delaunayInput.push_back(Delaunay::Point(1,1));
     delaunayInput.push_back(Delaunay::Point(0,2));
+	delaunayInput.push_back(Delaunay::Point(3,2));
 
 
     // 1. standard triangulation
@@ -67,6 +68,8 @@ int main()
             x1 = p1[1];
         }
     }
+	std::cout << "mesh has" << trGenerator.nvertices() << " vertices." << std::endl;
+	trGenerator.WriteToObj("x.obj");
 }
 
 // --- eof ---

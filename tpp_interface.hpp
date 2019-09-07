@@ -258,6 +258,7 @@ public:
 
             //void *floop;          //! Triangles Internal data.
             poface floop;
+			std::tuple<int, int, int> TriangleIndices(void);
                 
         public:
             void operator++();
@@ -277,7 +278,7 @@ public:
     int faceId(fIterator const &);
 
 
-    //! Access the origin (Org) vertex of a face.
+	//! Access the origin (Org) vertex of a face.
     /*!
       \param fit  Face interator.
       \param point  if specified: the cordinates of the vertex
@@ -491,9 +492,12 @@ private:
 
     friend class fIterator;
 
+public:
+	void WriteToObj(std::string filename);
 }; // Class Delaunay
 
 } // namespace tpp ends.
+
 
 
 #endif
