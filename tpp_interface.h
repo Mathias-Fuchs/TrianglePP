@@ -160,6 +160,8 @@ public:
     void writeoff(std::string& fname);
 
 	void writeObj2(const std::string& fname);
+	std::vector<double> vertices();
+	std::vector<int> triangles();
 
     //! Number of edges in the triangulation
     /*!

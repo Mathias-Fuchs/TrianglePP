@@ -218,6 +218,42 @@ namespace tpp {
 		delete[] pfname;
 	}
 
+	/*!
+*/
+	std::vector<double> Delaunay::vertices(void) {
+		if (!m_Triangulated) {
+			std::cerr << "FATAL: Vertices called before triangulation\n";
+			exit(1);
+		}
+
+		Triwrap::__pmesh* tpmesh = (Triwrap::__pmesh*) m_pmesh;
+		Triwrap::__pbehavior* tpbehavior = (Triwrap::__pbehavior*) m_pbehavior;
+
+		Triwrap* pdelclass = (Triwrap*)m_delclass;
+
+		return pdelclass->vertices(tpmesh, tpbehavior);
+	}
+
+	/*!
+*/
+	std::vector<int> Delaunay::triangles(void) {
+		if (!m_Triangulated) {
+			std::cerr << "FATAL: Triangles called before triangulation\n";
+			exit(1);
+		}
+
+		Triwrap::__pmesh* tpmesh = (Triwrap::__pmesh*) m_pmesh;
+		Triwrap::__pbehavior* tpbehavior = (Triwrap::__pbehavior*) m_pbehavior;
+
+		Triwrap* pdelclass = (Triwrap*)m_delclass;
+
+		return pdelclass->triangles(tpmesh, tpbehavior);
+	}
+
+
+
+
+
 
 	/*!
 	*/

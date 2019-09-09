@@ -22,6 +22,8 @@ int main()
 	// 1. standard triangulation
 	Delaunay trGenerator(delaunayInput);
 	trGenerator.Triangulate();
+	auto v = trGenerator.vertices();
+	auto t = trGenerator.triangles();
 
 	// iterate over triangles
 	for (Delaunay::fIterator fit = trGenerator.fbegin(); fit != trGenerator.fend(); ++fit)
@@ -84,6 +86,7 @@ int main()
 	tpp::Delaunay cardioid(cardioidPoints);
 	cardioid.Triangulate(true);
 	cardioid.writeObj2("cardioid2.obj");
+
 }
 
 // --- eof ---
