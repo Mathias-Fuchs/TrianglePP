@@ -13,15 +13,11 @@
 #ifndef REVIVER_POINT_HPP
 #define REVIVER_POINT_HPP
 
-// changed mrkkrj --
-//#include "assert.hpp"
-#include "tpp_assert.hpp"
-// END changed --
 #include <iostream>
 #include <valarray>
 #include <stdio.h>
 #include <limits>
-
+#include <cassert>
 
 //! The reviver namespace signifies the part of the code borrowed from reviver (dpoint.hpp). 
 namespace reviver {
@@ -322,7 +318,7 @@ public:
     inline void move2origin(){ origin<NumType, D, D-1>::eval(*this); };
 
     dpoint(){ 
-        Assert( (D >= 1), "Dimension < 1 not allowed" ); 
+        assert( (D >= 1), "Dimension < 1 not allowed" ); 
         // move2origin(); 
     };
 
@@ -445,7 +441,7 @@ operator* (const dpoint<NT,__DIM>& p, const NT k){
 template<typename NT, unsigned __DIM>
 dpoint<NT,__DIM>
 operator/ (const dpoint<NT,__DIM>& p, const NT k){
-    Assert( (k != 0), "Hell division by zero man...\n");
+    assert( (k != 0), "Hell division by zero man...\n");
     dpoint<NT,__DIM> result;
     Multiply<NT,__DIM,__DIM-1>::eval(result,p,((double)1.0)/k);	
     return result;
@@ -455,7 +451,7 @@ template < typename NumType, unsigned D >
 dpoint<NumType,D>&
 dpoint<NumType,D>::operator=(const dpoint<NumType,D> &q)
 {
-  Assert((this != &q), "Error p = p");
+  assert((this != &q), "Error p = p");
   Equate<NumType,NumType,D,D-1>::eval(*this,q);	
   return *this;
 }

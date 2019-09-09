@@ -354,7 +354,7 @@
 #define ONETHIRD 0.333333333333333333333333333333333333333333333333333333333333
 
 //#include <dpoint.hpp>
-#include "dpoint.hpp"
+#include "dpoint.h"
 #include <iostream>
 #include <algorithm>
 
@@ -15473,6 +15473,91 @@ char **argv;
   }
   finishfile(outfile, argc, argv);
 }
+
+
+
+#ifdef ANSI_DECLARATORS
+void writeObj2(struct mesh* m, struct behavior* b, char* objfilename,
+	int argc, char** argv)
+#else /* not ANSI_DECLARATORS */
+void writeoff(m, b, offfilename, argc, argv)
+struct mesh* m;
+struct behavior* b;
+char* objfilename;
+int argc;
+char** argv;
+#endif /* not ANSI_DECLARATORS */
+
+{
+	FILE* outfile;
+	struct otri triangleloop;
+	vertex vertexloop;
+	vertex p1, p2, p3;
+	long outvertices;
+
+	if (!b->quiet) {
+		printf("Writing %s.\n", objfilename);
+	}
+
+	if (b->jettison) {
+		outvertices = m->vertices.items - m->undeads;
+	}
+	else {
+		outvertices = m->vertices.items;
+	}
+
+	outfile = fopen(objfilename, "w");
+	if (outfile == (FILE*)NULL) {
+		printf("  Error:  Cannot create file %s.\n", objfilename);
+		triexit(1);
+	}
+
+	/* Number of vertices, triangles, and edges. */
+	int nvert = outvertices;
+	int ntriangles = m->triangles.items;
+	int nedges = m->edges;
+
+	/* Write the vertices. */
+	traversalinit(&m->vertices);
+	vertexloop = vertextraverse(m);
+	while (vertexloop != (vertex)NULL) {
+		if (!b->jettison || (vertextype(vertexloop) != UNDEADVERTEX)) {
+			fprintf(outfile, "v %.17g  %.17g  %.17g\n", vertexloop[0], vertexloop[1],
+				0.0);
+		}
+		vertexloop = vertextraverse(m);
+	}
+
+	/* Write the triangles. */
+	traversalinit(&m->triangles);
+	triangleloop.tri = triangletraverse(m);
+	triangleloop.orient = 0;
+	while (triangleloop.tri != (triangle*)NULL) {
+		org(triangleloop, p1);
+		dest(triangleloop, p2);
+		apex(triangleloop, p3);
+		fprintf(outfile, "f %4d  %4d  %4d\n",
+			vertexmark(p1) - b->firstnumber + 1,
+			vertexmark(p2) - b->firstnumber + 1,
+			vertexmark(p3) - b->firstnumber + 1);
+		triangleloop.tri = triangletraverse(m);
+	}
+	finishfile(outfile, argc, argv);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* #endif */ /* not TRILIBRARY */
 

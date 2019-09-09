@@ -2,7 +2,7 @@
 	\brief example usage of the Triangle++ wrapper
  */
 
-#include "tpp_interface.hpp"
+#include "tpp_interface.h"
 #include <vector>
 
 using namespace tpp;
@@ -83,7 +83,7 @@ int main()
 
 	tpp::Delaunay cardioid(cardioidPoints);
 	cardioid.Triangulate(true);
-	cardioid.WriteToObj("cardioid.obj");
+	cardioid.writeObj2("cardioid2.obj");
 }
 
 // --- eof ---

@@ -5,9 +5,7 @@
  */
 
 #include <iostream>
- // changed mrkkrj --
- //#include <triangle_impl.hpp>
- //#include <tpp_interface.hpp>
+#include <cassert>
 #define NO_TIMER
 #define DREDUCED
 #define ANSI_DECLARATORS
@@ -43,13 +41,13 @@ FILE* g_debugFile = 0;
 #define DETAIL_DEBUG_TRIANGLE 0
 // end DEBUG trace
 
-#include "triangle_impl.hpp"
-#include "tpp_interface.hpp"
+#include "triangle_impl.h"
 // END changed --
 
 #include <new>
 #include <fstream>
 #include <tuple>
+#include "tpp_interface.h"
 #define REAL double
 
 
@@ -58,11 +56,8 @@ namespace tpp {
 	using std::cout;
 	using std::cerr;
 
-
 	/*!
 	  Triangulate the points stored in m_PList.
-	  \note (mrkkrj) Copy-pasted from parts of the original Triangle's triangulate() function!
-	  \author Piyush Kumar
 	*/
 	void Delaunay::Triangulate(std::string& triswitches) {
 		typedef struct triangulateio  TriangStruct;
@@ -202,6 +197,27 @@ namespace tpp {
 		pdelclass->writeoff(tpmesh, tpbehavior, pfname, 0, NULL);
 		delete[] pfname;
 	}
+
+	/*!
+*/
+	void Delaunay::writeObj2(const std::string& fname) {
+		if (!m_Triangulated) {
+			std::cerr << "FATAL: Write called before triangulation\n";
+			exit(1);
+		}
+
+		Triwrap::__pmesh* tpmesh = (Triwrap::__pmesh*)     m_pmesh;
+		Triwrap::__pbehavior* tpbehavior = (Triwrap::__pbehavior*) m_pbehavior;
+
+		Triwrap* pdelclass = (Triwrap*)m_delclass;
+		char* pfname = new char[fname.size() + 1];
+		strcpy(pfname, fname.c_str());
+
+		pdelclass->writeObj2(tpmesh, tpbehavior, pfname, 0, NULL);
+		std::cout << "wrote file " << fname << std::endl;
+		delete[] pfname;
+	}
+
 
 	/*!
 	*/
@@ -657,7 +673,7 @@ namespace tpp {
 
 		/* Search for a triangle containing `newvertex'. */
 		int intersect = pdelclass->locate(tpmesh, tpbehavior, dv, &horiz);
-		Assert(intersect != Triwrap::ONVERTEX, "Something went wrong in point location\n"); // added mrkkrj
+		assert(intersect != Triwrap::ONVERTEX); // otherwise, something went wrong in point location\n")
 
 		if (intersect != Triwrap::ONVERTEX) { // Not on vertex!
 			cout << "Something went wrong in point location\n";

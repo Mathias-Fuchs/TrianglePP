@@ -85,7 +85,7 @@ You can download the latest version of the source code from <a href="triangle++.
 
 // changed mrkkrj --
 //#include <dpoint.hpp>
-#include "dpoint.hpp"
+#include "dpoint.h"
 // END changed --
 #include <vector>
 #include <string>
@@ -158,6 +158,8 @@ public:
       \param fname output file name.
     */
     void writeoff(std::string& fname);
+
+	void writeObj2(const std::string& fname);
 
     //! Number of edges in the triangulation
     /*!
