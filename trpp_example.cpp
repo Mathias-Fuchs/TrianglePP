@@ -3,6 +3,7 @@
  */
 
 #include "tpp_interface.h"
+#include "Triangulation.h"
 #include <vector>
 
 using namespace tpp;
@@ -87,6 +88,8 @@ int main()
 	cardioid.Triangulate(true);
 	cardioid.writeObj2("cardioid2.obj");
 
+	Triangulation tt(std::vector<double>{0, 0, 1, 1, 0, 2, 0, 2});
+	auto ttt = tt.vertices();
 }
 
 // --- eof ---

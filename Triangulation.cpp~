@@ -1,0 +1,8 @@
+#include "Triangulation.h"
+
+Triangulation::Triangulation(std::vector<double> polygon) {
+
+  std::vector<tpp::Delaunay::Point> dInput;
+  dInput.reserve(polygon.size() / 2);
+  this->d = this->d = 
+}

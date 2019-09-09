@@ -497,6 +497,7 @@ private:
     friend class fIterator;
 
 public:
+	// old function (mf), superseded by writeObj2
 	void WriteToObj(std::string filename);
 }; // Class Delaunay
 
