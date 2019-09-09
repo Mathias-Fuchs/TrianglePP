@@ -8,7 +8,7 @@ Triangulation::Triangulation(std::vector<double> polygon) {
     double y = *pi++;
     dInput.push_back(tpp::Delaunay::Point(x, y));
   }
-  this->d = std::unique_ptr<tpp::Delaunay>(new tpp::Delaunay(dInput));
+  this->d = std::make_unique<tpp::Delaunay>(dInput);
   this->d->Triangulate(true);
 }
 
